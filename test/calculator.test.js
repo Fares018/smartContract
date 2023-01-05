@@ -8,68 +8,50 @@ describe('Calculator', function () {
     const calculator = await Calculator.deploy();
     contract = await calculator.deployed();
     console.log('calculator deployed at:' + calculator.address);
-    const sum = await calculator.add(4, 5);
-    console.log('******', sum);
-    console.log('####', sum.data);
-    expect(sum).to.equal(9);
+    const transactionResponse = await calculator.add(4, 5);
+    const transactionReceipt = await transactionResponse.wait();
+    const endResult = transactionReceipt.events[0].args.result;
+    console.log(endResult);
+
+    expect(endResult).to.equal(9);
   });
 
   it('test substraction function', async function () {
-    const Calculator = await ethers.getContractFactory('calculator');
-    const calculator = await Calculator.deploy();
-    await calculator.deployed();
-    console.log('calculator deployed at:' + calculator.address);
-    expect(await calculator.sub(-5, -5)).to.equal(0);
-  });
-  it('test multiplaction function', async function () {
-    const Calculator = await ethers.getContractFactory('calculator');
-    const calculator = await Calculator.deploy();
-    await calculator.deployed();
-    console.log('calculator deployed at:' + calculator.address);
-    expect(await calculator.mult(4, 5)).to.equal(20);
-  });
-  it('test division function', async function () {
-    const Calculator = await ethers.getContractFactory('calculator');
-    const calculator = await Calculator.deploy();
-    await calculator.deployed();
-    console.log('calculator deployed at:' + calculator.address);
-    expect(await calculator.div(16, 4)).to.equal(4);
-  });
-
-  /*
-  
-  it('test add function', async function () {
     const Calculator = await ethers.getContractFactory('calculator');
     const calculator = await Calculator.deploy();
     contract = await calculator.deployed();
     console.log('calculator deployed at:' + calculator.address);
-    const sum = await calculator.getAddition(4, 5);
-    console.log('******', sum);
-    console.log('####', sum.data);
-    expect(sum).to.equal(9);
-  });
-  
+    const transactionResponse = await calculator.sub(-5, -5);
+    const transactionReceipt = await transactionResponse.wait();
+    const endResult = transactionReceipt.events[0].args.result;
+    console.log(endResult);
 
-  it('test substraction function', async function () {
-    const Calculator = await ethers.getContractFactory('calculator');
-    const calculator = await Calculator.deploy();
-    await calculator.deployed();
-    console.log('calculator deployed at:' + calculator.address);
-    expect(await calculator.sub(-5, -5)).to.equal(0);
+    expect(endResult).to.equal(0);
   });
+
   it('test multiplaction function', async function () {
     const Calculator = await ethers.getContractFactory('calculator');
     const calculator = await Calculator.deploy();
-    await calculator.deployed();
+    contract = await calculator.deployed();
     console.log('calculator deployed at:' + calculator.address);
-    expect(await calculator.mult(4, 5)).to.equal(20);
+    const transactionResponse = await calculator.mult(4, 5);
+    const transactionReceipt = await transactionResponse.wait();
+    const endResult = transactionReceipt.events[0].args.result;
+    console.log(endResult);
+
+    expect(endResult).to.equal(20);
   });
+
   it('test division function', async function () {
     const Calculator = await ethers.getContractFactory('calculator');
     const calculator = await Calculator.deploy();
-    await calculator.deployed();
+    contract = await calculator.deployed();
     console.log('calculator deployed at:' + calculator.address);
-    expect(await calculator.div(16, 4)).to.equal(4);
+    const transactionResponse = await calculator.div(20, 4);
+    const transactionReceipt = await transactionResponse.wait();
+    const endResult = transactionReceipt.events[0].args.result;
+    console.log(endResult);
+
+    expect(endResult).to.equal(5);
   });
-  */
 });
